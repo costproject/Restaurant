@@ -6,16 +6,11 @@
 
 import java.awt.Color;
 import javax.swing.*;
-
-/**
- *
- * @author Sandun Siwantha
- */
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -26,6 +21,8 @@ public class Admin extends javax.swing.JFrame {
     public Admin() {
         initComponents();
         this.setLocationRelativeTo(this);
+        
+        
         
         String url="jdbc:mysql://localhost/mrburger";
         String user="root";
@@ -438,58 +435,35 @@ public class Admin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
-        // TODO add your handling code here:
+   
         resetColor(logout);
     }//GEN-LAST:event_logoutMouseExited
 
     private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
-        // TODO add your handling code here:
+      
         setColor(logout);
     }//GEN-LAST:event_logoutMouseEntered
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
     
-// TODO add your handling code here:
+
         Welcome lg = new Welcome();
         lg.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_logoutMouseClicked
 
     private void stockManagementMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_stockManagementMouseClicked
-        // TODO add your handling code here:
+       
         Menu mn = new Menu();
         mn.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_stockManagementMouseClicked
-
-    private void btnOKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOKMouseClicked
-        String Cust_Name = FLname.getText();
-        String Email = email1.getText();
-        String Mobile_No = MobNumber.getText();
-        
-        if(Cust_Name.isEmpty()||Email.isEmpty()||Mobile_No.isEmpty()){
-            JOptionPane.showMessageDialog(this, 
-                    "Please enter all fields", 
-                    "Try again", 
-                    JOptionPane.ERROR_MESSAGE);
-            
-        }else{
-            DefaultTableModel model = (DefaultTableModel)tblCustomer.getModel();
-            model.addRow(new Object[]{Cust_Name, Email, Mobile_No});
-        }
-        
-        
-        Oders od = new Oders();
-        od.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnOKMouseClicked
 
     private void order1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_order1MouseClicked
        String msg=cust_id.getText();
         new Oders(msg).setVisible(true);
         setVisible(false);
      
-// TODO add your handling code here:
         /*Oders od = new Oders();
         od.setVisible(true);**/
         this.dispose();
@@ -503,19 +477,15 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_stockManagement1MouseClicked
 
     private void tblBurAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblBurAncestorAdded
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_tblBurAncestorAdded
 
     private void FLnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FLnameActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_FLnameActionPerformed
 
-    private void btnOKAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_btnOKAncestorAdded
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnOKAncestorAdded
-
     private void tab3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab3MouseClicked
-        // TODO add your handling code here:
+      
     }//GEN-LAST:event_tab3MouseClicked
 
     private void jPanelOrdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelOrdMouseClicked
@@ -524,6 +494,65 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanelOrdMouseClicked
 
     private void jTabbedPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTabbedPane1MouseClicked
+       String sql3="SELECT * FROM items WHERE Item_Id LIKE 'BUR%'";
+        try{
+            PreparedStatement pst = con.prepareStatement(sql3);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel model = (DefaultTableModel)tblBur.getModel();
+            model.setRowCount(0);
+            while(rs.next()){
+                model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(4)});
+            }
+        }catch(Exception ex){
+            System.out.println("Error : " +ex.getMessage());
+        }
+        
+        
+        
+        String sql4="SELECT * FROM items WHERE Item_Id LIKE 'APP%'";
+        try{
+            PreparedStatement pst = con.prepareStatement(sql4);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel model = (DefaultTableModel)tblApp.getModel();
+            model.setRowCount(0);
+            while(rs.next()){
+                model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(4)});
+            }
+        }catch(Exception ex){
+            System.out.println("Error : " +ex.getMessage());
+        }
+        
+        
+        
+        String sql5="SELECT * FROM items WHERE Item_Id LIKE 'BEV%'";
+        try{
+            PreparedStatement pst = con.prepareStatement(sql5);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel model = (DefaultTableModel)tblBev.getModel();
+            model.setRowCount(0);
+            while(rs.next()){
+                model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(4)});
+            }
+        }catch(Exception ex){
+            System.out.println("Error : " +ex.getMessage());
+        }
+        
+        
+        
+        String sql6="SELECT * FROM items WHERE Item_Id LIKE 'DES%'";
+        try{
+            PreparedStatement pst = con.prepareStatement(sql6);
+            ResultSet rs = pst.executeQuery();
+            DefaultTableModel model = (DefaultTableModel)tblDes.getModel();
+            model.setRowCount(0);
+            while(rs.next()){
+                model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(4)});
+            }
+        }catch(Exception ex){
+            System.out.println("Error : " +ex.getMessage());
+        }
+        
+        
         String sql1="SELECT * FROM orders";
         try{
             PreparedStatement pst = con.prepareStatement(sql1);
@@ -533,11 +562,12 @@ public class Admin extends javax.swing.JFrame {
             while(rs.next()){
                 model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)});
             }
-            
-            
         }catch(Exception ex){
             System.out.println("Error : " +ex.getMessage());
         }
+        
+        
+        
         
         String sql2="SELECT * FROM customer";
         try{
@@ -548,8 +578,6 @@ public class Admin extends javax.swing.JFrame {
             while(rs.next()){
                 model.addRow(new String[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4)});
             }
-            
-            
         }catch(Exception ex){
             System.out.println("Error : " +ex.getMessage());
             
@@ -563,6 +591,42 @@ public class Admin extends javax.swing.JFrame {
     private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
        
     }//GEN-LAST:event_tblCustomerMouseClicked
+
+    private void btnOKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnOKMouseClicked
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mrburger", "root", "");
+
+            String s = "UPDATE customer SET Cust_Name = ? ,Email = ?, Mobile_No = ? WHERE Cust_Id = ?";
+            System.out.println("query done");
+            PreparedStatement pst = con.prepareStatement(s);
+            String Name = FLname.getText();
+            String email = email1.getText();
+            String Mob = MobNumber.getText();
+            int id = Integer.parseInt(cust_id.getText());            
+            
+            pst.setString(1,Name);
+            pst.setString(2,email);
+            pst.setString(3,Mob);
+            pst.setInt(4,id);
+            pst.executeUpdate();  
+            
+            
+                JOptionPane.showMessageDialog(this, "Inserted Successfully!");
+                //model.addRow(new String[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)});
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        
+        Oders od = new Oders();
+        od.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnOKMouseClicked
+
+    private void btnOKAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_btnOKAncestorAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnOKAncestorAdded
 
     public void setColor(JLabel p){
         p.setBackground(new Color(205,200,35));
