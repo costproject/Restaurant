@@ -16,7 +16,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class Admin extends javax.swing.JFrame {
 
-    Connection con;
+    Connection con = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
     
     public Admin() {
         initComponents();
@@ -580,8 +583,8 @@ public class Admin extends javax.swing.JFrame {
             }
         }catch(Exception ex){
             System.out.println("Error : " +ex.getMessage());
-            
         }
+        Updatetable();
     }//GEN-LAST:event_jTabbedPane1MouseClicked
 
     private void jPanelCustMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanelCustMouseClicked
@@ -611,9 +614,7 @@ public class Admin extends javax.swing.JFrame {
             pst.setInt(4,id);
             pst.executeUpdate();  
             
-            
                 JOptionPane.showMessageDialog(this, "Inserted Successfully!");
-                //model.addRow(new String[]{rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)});
             
         }catch(Exception e){
             System.out.println(e);
@@ -709,4 +710,8 @@ public class Admin extends javax.swing.JFrame {
     private javax.swing.JTable tblDes;
     private javax.swing.JTable tblOrders;
     // End of variables declaration//GEN-END:variables
+
+    private void Updatetable() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
